@@ -1,0 +1,85 @@
+# NO2 Air Quality Analysis 🌍
+
+## What's This About?
+We're analyzing air pollution data (specifically NO2 levels) and figuring out its statistical patterns using some neat math tricks.
+
+---
+
+## How It Works
+
+### Step 1: Get the Data Ready
+Started with **418,724 air quality measurements**. Cleaned out the junk (missing values, negatives) and kept only valid NO2 readings.
+
+### Step 2: Add Some Personal Flavor
+Every roll number gets its own twist using this transformation:
+
+```
+z = x + 0.25 × sin(1.2 × x)
+```
+
+Think of it like adding a wave pattern to the data. Makes it more interesting to analyze!
+
+### Step 3: Find the Best-Fit Bell Curve
+Used **Maximum Likelihood Estimation** to find the perfect Gaussian curve that matches our transformed data.
+
+The formula we're fitting:
+```
+p(z) = c × exp(-λ(z - μ)²)
+```
+
+---
+
+## The Results 
+
+| What | Value | What It Means |
+|------|-------|---------------|
+| **μ** (mean) | 25.85 | Where most NO2 values cluster |
+| **σ** (spread) | 35.25 | How much values bounce around |
+| **λ** (precision) | 0.001462 | How "tight" the distribution is |
+| **c** (constant) | 0.021574 | Makes the math work out to 100% |
+
+**Translation**: NO2 levels average around 25.85 ppb but vary wildly (±35 ppb). That's pretty typical for city air quality—lots of ups and downs!
+
+---
+
+## What This Tells Us 
+
+- **High variance** = pollution isn't consistent (rush hour vs midnight, industrial areas vs parks)
+- **The transformation** helps us see patterns that raw data might hide
+- **Gaussian fit** works because pollution results from tons of random factors adding up
+
+---
+
+## Quick Visual Check
+
+Want to see if this actually works? Plot these:
+
+1. **Before/After histogram** - How transformation changes the data shape
+2. **Fitted curve overlay** - Does our bell curve match reality?
+3. **Q-Q plot** - Quick normality check
+
+---
+
+## Running the Code
+
+Super simple:
+```python
+estimate_pdf_parameters(102353018, '/content/data.csv')
+```
+
+That's it. Get your μ, λ, and c instantly.
+
+---
+
+## Cool Extensions 
+
+- Test other distributions (log-normal might fit better!)
+- Analyze time patterns (morning vs evening pollution)
+- Predict future NO2 levels
+- Compare different cities
+
+---
+
+**Made with** 🐍 Python | Real air quality data |  Statistical modeling
+
+*Keep breathing (clean air hopefully)!* 

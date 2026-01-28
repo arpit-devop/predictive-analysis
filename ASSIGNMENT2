@@ -1,0 +1,73 @@
+
+# Custom 1D GAN for Synthetic Data Generation
+
+A "from-scratch" implementation of a Generative Adversarial Network (GAN) using **NumPy** to model and generate synthetic atmospheric  concentration data. This project bypasses high-level libraries like TensorFlow or PyTorch to demonstrate the fundamental mathematics of backpropagation, Adam optimization, and adversarial training.
+
+##  Project Overview
+
+The objective of this project is to train a Generator network to produce synthetic data points that are statistically indistinguishable from a set of transformed  readings.
+
+### Key Features
+
+* **Mathematical Core:** Manual implementation of Forward/Backward passes, Leaky ReLU, and Sigmoid activations.
+* **Custom Optimizer:** A ground-up implementation of the **Adam Optimizer** (Adaptive Moment Estimation).
+* **Dynamic Transformation:** Data is augmented using a deterministic sine-wave transformation based on a specific seed (Roll Number).
+* **Evaluation Suite:** Includes Kolmogorov-Smirnov (KS) tests, Wasserstein Distance, and Q-Q plots to validate generation quality.
+
+##  Model Architecture
+
+The GAN consists of two competing neural networks:
+
+1. **The Generator ():** Takes a 32-dimensional latent noise vector and attempts to map it to a single value representing a synthetic  reading.
+* *Layers:* 
+
+
+2. **The Discriminator ():** A binary classifier that receives a data point (either from the real dataset or the Generator) and predicts the probability that it is "Real."
+* *Layers:* 
+
+
+
+##  Getting Started
+
+### Prerequisites
+
+* Python 3.x
+* NumPy
+* Pandas
+* Matplotlib
+* SciPy
+
+### Data Preparation
+
+The script expects a CSV file named `data.csv` in the `/content/` directory. The file must contain a column labeled `"no2"`.
+
+### Execution
+
+Simply run the script:
+
+```bash
+python gan_model.py
+
+```
+
+##  Outputs & Evaluation
+
+Upon completion, the system generates two files:
+
+* **`gan_results.png`**: A 2x3 dashboard showing data distributions, training loss curves, and a Q-Q plot.
+* **`pdf.png`**: A high-resolution comparison of the Probability Density Functions (PDF) of the real vs. generated data.
+
+### Metrics Used
+
+* **KS Statistic:** Measures the maximum distance between the empirical distribution functions.
+* **Wasserstein Distance:** Measures the "Earth Mover's" distance between distributions.
+* **Q-Q Plot:** Visually assesses if the quantiles of the generated data match the real data (ideal match is a  line).
+
+##  Configuration
+
+You can modify the training behavior by adjusting parameters in the `SimpleGAN.fit()` method:
+
+* `epochs`: Default is 2000.
+* `batch_size`: Default is 128.
+* `lr` (Learning Rate): Default is 0.0002 for both networks.
+
